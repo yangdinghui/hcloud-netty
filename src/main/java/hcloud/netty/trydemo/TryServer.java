@@ -2,9 +2,13 @@ package hcloud.netty.trydemo;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
+import java.net.SocketOptions;
 
 /**
  * @author YDH
@@ -23,6 +27,7 @@ public class TryServer {
             ServerBootstrap server = new ServerBootstrap();
             server.group(parent, child)
                     .channel(NioServerSocketChannel.class)
+                    .option(ChannelOption.SO_BACKLOG,128)
                     .childHandler(new TryServerInitializer());
 
             ChannelFuture channelFuture = server.bind(8090).sync();

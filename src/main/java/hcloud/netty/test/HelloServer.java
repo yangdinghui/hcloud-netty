@@ -2,6 +2,7 @@ package hcloud.netty.test;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -16,6 +17,7 @@ public class HelloServer {
             //netty服务器的创建，ServerBootstrap是一个启动类
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, worksGroup)        //主从线程组
+                    .option(ChannelOption.SO_BACKLOG,128)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new HelloServerInitializer());                        //子处理器
 
